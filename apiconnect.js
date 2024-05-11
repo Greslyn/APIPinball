@@ -67,14 +67,23 @@ app.delete('/deleteFirst', (req, res) => {
         res.status(500).json({ error: err });
     });
 });
-
+//endpoint
 app.put('/updateFirst', (req, res) => {
-    // Obtén los datos enviados en la solicitud
     const { username, score } = req.body;
 
- 
-    // Envía una respuesta al cliente
-    res.status(200).json({ message: "Primer puesto actualizado correctamente" });
+    // Encuentra el documento con la puntuación más alta y actualízalo
+    Score.findOneAndUpdate({}, { username: username, score: score }, { sort: { 'score': -1 }, new: true })
+    .then(function(updatedDocument){
+        if(updatedDocument) {
+            res.status(200).json({ message: "Primer puesto actualizado correctamente", updatedDocument });
+        } else {
+            res.status(404).json({ message: "No se encontró el documento para actualizar" });
+        }
+    })
+    .catch(function(err){
+        console.log(err);
+        res.status(500).json({ error: err });
+    });
 });
 
 app.listen(3000, () => console.log('Server listening on port 3000'));
