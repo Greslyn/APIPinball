@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 
 const url = 'mongodb+srv://Paula:iaAwJhyoyjti3uAT@cluster0.wfwsbla.mongodb.net/Pinball?retryWrites=true&w=majority';
 
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(url);
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
