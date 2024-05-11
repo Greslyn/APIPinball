@@ -75,6 +75,7 @@ app.put('/updateFirst', (req, res) => {
     Score.findOneAndUpdate({}, { username: username, score: score }, { sort: { 'score': -1 }, new: true })
     .then(function(updatedDocument){
         if(updatedDocument) {
+            console.log("Primer puesto actualizado correctamente");
             res.status(200).json({ message: "Primer puesto actualizado correctamente", updatedDocument });
         } else {
             res.status(404).json({ message: "No se encontró el documento para actualizar" });
