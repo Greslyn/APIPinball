@@ -54,7 +54,7 @@ app.post('/score', async (req, res) => {
 
 app.get('/scores', (req, res) => {
 
-    Score.find({}).then(function(users){
+    Score.find({}).sort({ Score: -1 }).limit(5).then(function(users){
 
         res.json(users)
     }).catch(function(err){
