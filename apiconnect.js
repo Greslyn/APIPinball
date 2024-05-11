@@ -72,7 +72,7 @@ app.put('/updateFirst', (req, res) => {
     const { username, score } = req.body;
 
     // Encuentra el documento con la puntuación más alta y actualízalo
-    Score.findOneAndUpdate({}, { username: username, score: score }, { sort: { 'score': -1 }, new: true })
+    Score.findOneAndUpdate({}, { username: username, score: score }, { sort: {  Score: -1 }, new: true })
     .then(function(updatedDocument){
         if(updatedDocument) {
             console.log("Primer puesto actualizado correctamente");
