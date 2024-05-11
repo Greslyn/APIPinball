@@ -62,5 +62,19 @@ app.get('/scores', (req, res) => {
     })
 });
 
+app.delete('/deleteFirst', (req, res) => {
+    // Encuentra el primer documento basado en la puntuación más alta y elimínalo
+    Score.findOneAndDelete({}).sort({ Score: -1 }).then(function(deletedDocument){
+        if(deletedDocument) {
+            res.status(200).json({ message: "Primer puesto borrado correctamente", deletedDocument });
+        } else {
+            res.status(404).json({ message: "No se encontró el documento para borrar" });
+        }
+    }).catch(function(err){
+        console.log(err);
+        res.status(500).json({ error: err });
+    });
+});
+
 
 app.listen(3000, () => console.log('Server listening on port 3000'));
