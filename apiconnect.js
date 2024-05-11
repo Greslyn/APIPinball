@@ -39,18 +39,10 @@ app.post('/score', async (req, res) => {
     } catch (error) {
         console.error(error);
     }
-//   data.save((err, data) => {
-//     if (err) return console.error(err);
-//     res.send(data);
-//   });
+
 });
 
-// app.get('/scores', (req, res) => {
-//   Score.find((err, scores) => {
-//     if (err) return console.error(err);
-//     res.send(scores);
-//   });
-// });
+
 
 app.get('/scores', (req, res) => {
 
@@ -76,5 +68,13 @@ app.delete('/deleteFirst', (req, res) => {
     });
 });
 
+app.put('/updateFirst', (req, res) => {
+    // Obtén los datos enviados en la solicitud
+    const { username, score } = req.body;
+
+ 
+    // Envía una respuesta al cliente
+    res.status(200).json({ message: "Primer puesto actualizado correctamente" });
+});
 
 app.listen(3000, () => console.log('Server listening on port 3000'));
