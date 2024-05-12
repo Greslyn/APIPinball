@@ -69,18 +69,16 @@ app.delete('/deleteFirst', (req, res) => {
 });
 //endpoint
 app.put('/updateFirst', async(req, res) => {
-    const {Username, Score } = req.body;
 
     try {
-        // Encuentra el documento con la puntuación más alta
-        const doc = await Score.findOne({}).sort({ Score: -1 }).exec();
+        // Encuentra el documento con la puntuación más alta y actualízalo
+        const updatedDocument = await Score.findOneAndUpdate(
+            {}, 
+            { Username: req.body.Username, Score: req.body.Score }, 
+            { sort: { Score: -1 }, new: true }
+        );
 
-        if (doc) {
-            // Actualiza el documento encontrado con los nuevos valores
-            doc.Username = Username;
-            doc.Score = Score;
-            const updatedDocument = await doc.save();
-
+        if(updatedDocument) {
             console.log("Primer puesto actualizado correctamente", updatedDocument);
             res.status(200).json({ message: "Primer puesto actualizado correctamente", updatedDocument });
         } else {
