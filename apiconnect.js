@@ -68,23 +68,28 @@ app.delete('/deleteFirst', (req, res) => {
     });
 });
 //endpoint
-app.put('/updateFirst', (req, res) => {
+app.put('/updateFirst', async(req, res) => {
     const {Username, Score } = req.body;
 
-    // Encuentra el documento con la puntuación más alta y actualízalo
-    Score.findOneAndUpdate({}, { Username: Username, Score: Score }, { sort: {  Score: -1 }})
-    .then(function(updatedDocument){
-        if(updatedDocument) {
+    try {
+        // Encuentra el documento con la puntuación más alta
+        const doc = await Score.findOne({}).sort({ Score: -1 }).exec();
+
+        if (doc) {
+            // Actualiza el documento encontrado con los nuevos valores
+            doc.Username = Username;
+            doc.Score = Score;
+            const updatedDocument = await doc.save();
+
             console.log("Primer puesto actualizado correctamente", updatedDocument);
             res.status(200).json({ message: "Primer puesto actualizado correctamente", updatedDocument });
         } else {
             res.status(404).json({ message: "No se encontró el documento para actualizar" });
         }
-    })
-    .catch(function(err){
+    } catch (err) {
         console.log(err);
         res.status(500).json({ error: err });
-    });
+    }
 });
 
 app.listen(3000, () => console.log('Server listening on port 3000'));
