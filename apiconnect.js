@@ -69,10 +69,10 @@ app.delete('/deleteFirst', (req, res) => {
 });
 //endpoint
 app.put('/updateFirst', (req, res) => {
-    const { username, score } = req.body;
+    const {Username, Score } = req.body;
 
     // Encuentra el documento con la puntuación más alta y actualízalo
-    Score.findOneAndUpdate({}, { Username: username, Score: score }, { sort: {  Score: -1 }})
+    Score.findOneAndUpdate({}, { Username: Username, Score: Score }, { sort: {  Score: -1 }})
     .then(function(updatedDocument){
         if(updatedDocument) {
             console.log("Primer puesto actualizado correctamente", updatedDocument);
